@@ -6,6 +6,9 @@
   <Protocol name="LibraryService">
 
   <Memory name="LibraryService">
+    <Constant name="true" type="Boolean">true</Constant>
+    <Constant name="false" type="Boolean">false</Constant>
+
     <!-- book availability constants -->
     <Constant name="available" type="String">Book1</Constant>
     <Constant name="unavailable" type="String">Book2</Constant>
