@@ -1,0 +1,8 @@
+<Machine id="0" name="LibraryService">
+    <Notice id="1" text="Validation report for machine: LibraryService"/>
+    <State id="2" name="Initial" initial="true">
+        <Notice id="3" text="Completeness check for state: Initial"/>
+        <Transition id="4" name="checkAvailability/ok" source="Initial" target="Initial"/>
+        <Transition id="5" name="checkAvailability/error" source="Initial" target="Initial"/>
+    </State>
+</Machine>
