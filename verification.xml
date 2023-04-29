@@ -1,0 +1,79 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Protocol id="0" name="LibraryService">
+  <Notice id="1" text="Verification report for protocol: LibraryService">
+    <Analysis id="2" text="Memory is correctly initialised"/>
+    <Warning id="3" text="Some inputs are not bound in operation: checkAvailability(book)"/>
+    <Warning id="4" text="Some inputs are not bound in operation: checkAvailability(book)"/>
+    <Analysis id="5" text="Operation is deterministic: checkAvailability(book)"/>
+  </Notice>
+  <Memory id="6" name="LibraryService">
+    <Notice id="7" text="Initialisation check for memory: LibraryService">
+      <Analysis id="8" text="Memory is correctly initialised"/>
+    </Notice>
+    <Constant id="9" name="true" type="Boolean">true</Constant>
+    <Constant id="10" name="false" type="Boolean">false</Constant>
+    <Constant id="11" name="available" type="String">Book1</Constant>
+    <Constant id="12" name="unavailable" type="String">Book2</Constant>
+    <Constant id="13" name="initialStock" type="Map[String, Integer]">{Book1=10, Book2=0, Book3=3}</Constant>
+    <Constant id="14" name="zero" type="Integer">0</Constant>
+    <Constant id="15" name="one" type="Integer">1</Constant>
+    <Variable id="16" name="currentStock" type="Map[String, Integer]"/>
+    <Binding id="17">
+      <Assignment id="18" name="equals" type="Void">
+        <Variable ref="16" name="currentStock"/>
+        <Constant ref="13" name="initialStock"/>
+      </Assignment>
+    </Binding>
+  </Memory>
+  <Operation id="19" name="checkAvailability">
+    <Notice id="20" text="Completeness check for operation: checkAvailability">
+      <Warning id="21" text="Input: book is not bound in scenario: checkAvailability/ok"/>
+      <Warning id="22" text="Input: book is not bound in scenario: checkAvailability/error"/>
+      <Notice id="23" text="Valid partitions of the input/memory space:">
+        <Analysis id="24" text="input 1 = moreThan(searchAt(currentStock, book), zero)"/>
+        <Analysis id="25" text="input 2 = equals(searchAt(currentStock, book), zero)"/>
+        <Analysis id="26" text="input 3 = lessThan(searchAt(currentStock, book), zero)"/>
+      </Notice>
+      <Analysis id="27" text="Scenario checkAvailability/ok accepts input 1"/>
+      <Analysis id="28" text="Scenario checkAvailability/error accepts input 2"/>
+      <Analysis id="29" text="Scenario checkAvailability/error accepts input 3"/>
+    </Notice>
+    <Input id="30" name="book" type="String"/>
+    <Output id="31" name="available" type="Boolean"/>
+    <Scenario id="32" name="checkAvailability/ok">
+      <Condition id="33">
+        <Comparison id="34" name="moreThan" type="Boolean">
+          <Manipulation id="35" name="searchAt" type="Integer">
+            <Variable ref="16" name="currentStock"/>
+            <Input ref="30" name="book"/>
+          </Manipulation>
+          <Constant ref="14" name="zero"/>
+        </Comparison>
+      </Condition>
+      <Effect id="36">
+        <Assignment id="37" name="equals" type="Void">
+          <Output ref="31" name="available"/>
+          <Constant ref="9" name="true"/>
+        </Assignment>
+      </Effect>
+    </Scenario>
+    <Scenario id="38" name="checkAvailability/error">
+      <Condition id="39">
+        <Comparison id="40" name="notMoreThan" type="Boolean">
+          <Manipulation id="41" name="searchAt" type="Integer">
+            <Variable ref="16" name="currentStock"/>
+            <Input ref="30" name="book"/>
+          </Manipulation>
+          <Constant ref="14" name="zero"/>
+        </Comparison>
+      </Condition>
+      <Effect id="42">
+        <Assignment id="43" name="equals" type="Void">
+          <Output ref="31" name="available"/>
+          <Constant ref="10" name="false"/>
+        </Assignment>
+      </Effect>
+    </Scenario>
+  </Operation>
+</Protocol>

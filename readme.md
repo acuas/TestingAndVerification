@@ -141,3 +141,48 @@ Let's break down the generated validation report:
 
 The validation report confirms that the state machine is complete because all events are explicitly handled by specified transitions in every state. In this case, both "checkAvailability/ok" and "checkAvailability/error" events have transitions defined in the "Initial" state, ensuring that the state machine handles all possible events.
 ```
+
+## Verification
+
+The verification process examines the specification for completeness and consistency by analyzing the protocol, memory, and operation scenarios. Here's a step-by-step explanation of the verification process:
+
+Initialization Check: The verification process begins by checking whether the memory is correctly initialized. In this case, it is, and an Analysis node with the text "Memory is correctly initialised" is added to the output.
+
+Input Binding Check: The process then checks if all operation inputs are bound in the scenarios. In this case, there are two warnings generated for the operation "checkAvailability(book)" since the input "book" is not bound in either scenario (checkAvailability/ok and checkAvailability/error).
+
+Determinism Check: Next, the process checks if the operation is deterministic, meaning that for any given input, there is only one possible outcome. The operation "checkAvailability(book)" is found to be deterministic, and an Analysis node is added to the output with the text "Operation is deterministic: checkAvailability(book)".
+
+Input Partitioning: The process then analyzes the input space and determines valid partitions for the input and memory space. In this case, three input partitions are identified:
+
+input 1: moreThan(searchAt(currentStock, book), zero)
+input 2: equals(searchAt(currentStock, book), zero)
+input 3: lessThan(searchAt(currentStock, book), zero)
+Scenario Analysis: The process then analyzes each scenario for the operation "checkAvailability" and determines which input partitions are accepted by each scenario.
+
+Scenario "checkAvailability/ok" accepts input 1 (moreThan(searchAt(currentStock, book), zero))
+Scenario "checkAvailability/error" accepts input 2 (equals(searchAt(currentStock, book), zero)) and input 3 (lessThan(searchAt(currentStock, book), zero))
+Blocking and Non-determinism Checks: The process checks for any blocking or non-deterministic behavior in the operation. In this case, there are no such issues found.
+
+The verification process concludes with the generation of an XML file containing the analyzed protocol specification, with Notice, Analysis, and Warning nodes as described above. The warnings indicate that the input "book" is not bound in the scenarios, which should be corrected in the specification.
+
+## Test Generation:
+
+Let's break down the XML file step by step:
+
+TestSuite: The root node of the file is the TestSuite, which includes attributes like id, name, testDepth, multiTest, grounding, and metaCheck. It represents the entire test suite generated for the LibraryService specification.
+
+Notice: The Notice node with id="1" contains information about the generated test suite for the LibraryService. It has several child nodes:
+
+a. Analysis: These nodes (id="2" to id="7") provide details about the generated test suite, such as the exploration depth, the number of theoretical, infeasible, redundant, executable, and multi-objective sequences.
+
+b. Warning: Two Warning nodes (id="8" and id="11") indicate that certain transitions were never fired during the test generation process and the specification is not fully covered by the test suite. The analysis in id="12" suggests introducing a new scenario to improve the coverage.
+
+TestSequence: The TestSequence node (id="13") represents a single test sequence within the test suite. It has attributes like state, path, and test. In this case, there's only one test sequence in the suite, with the state set to "Initial," path to "0," and test to "1."
+
+TestStep: Inside the TestSequence node, there is a TestStep node (id="14"), which represents a single step within the test sequence. It has attributes like name, state, and verify. In this case, the TestStep has the name "create/ok," state set to "Initial," and verify set to "true."
+
+a. Operation: The Operation node (id="15") within the TestStep node specifies the operation to be executed in this step, which is "create" in this case.
+
+The generated test suite contains only one test sequence, which consists of a single test step, performing the "create" operation in the "Initial" state. The Notice node provides insights into the test generation process and highlights that the specification is not fully covered, suggesting the need for additional scenarios to improve coverage.
+
+For more info, please visit http://staffwww.dcs.shef.ac.uk/people/A.Simons/broker/index.html.

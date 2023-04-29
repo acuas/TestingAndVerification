@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestSuite id="0" name="LibraryService" testDepth="3" multiTest="true" grounding="Java" metaCheck="true">
+  <Notice id="1" text="Generated test suite for service: LibraryService">
+    <Analysis id="2" text="Exploring all paths up to length: 3"/>
+    <Analysis id="3" text="Number of theoretical sequences: 15"/>
+    <Analysis id="4" text="Number of infeasible sequences: 14"/>
+    <Analysis id="5" text="Number of redundant sequences: 0"/>
+    <Analysis id="6" text="Number of executable sequences: 1"/>
+    <Analysis id="7" text="Number of multi-objective sequences: 1"/>
+    <Warning id="8" text="These Transitions were never fired:">
+      <Transition id="9" name="checkAvailability/ok" source="Initial" target="Initial"/>
+      <Transition id="10" name="checkAvailability/error" source="Initial" target="Initial"/>
+    </Warning>
+    <Warning id="11" text="Specification is not fully covered by the test suite">
+      <Analysis id="12" text="Suggest introducing a new scenario"/>
+    </Warning>
+  </Notice>
+  <TestSequence id="13" state="Initial" path="0" test="1">
+    <TestStep id="14" name="create/ok" state="Initial" verify="true">
+      <Operation id="15" name="create"/>
+    </TestStep>
+  </TestSequence>
+</TestSuite>
