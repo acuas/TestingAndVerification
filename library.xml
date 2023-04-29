@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Service name="LibraryService">
+
+  <!-- a simple library service -->
+
+  <Protocol name="LibraryService">
+
+  <Memory name="LibraryService">
+    <!-- book availability constants -->
+    <Constant name="available" type="String">Book1</Constant>
+    <Constant name="unavailable" type="String">Book2</Constant>
+
+    <!-- constants for the initial library stock -->
+    <Constant name="initialStock" type="Map[String, Integer]">
+       {Book1=10, Book2=0, Book3=3}
+    </Constant>
+
+    <!-- variable for the current library stock -->
+    <Variable name="currentStock" type="Map[String, Integer]"/>
+
+    <Binding>
+      <!-- set up the initial stock -->
+      <Assignment name="equals">
+        <Variable name="currentStock"/>
+        <Constant name="initialStock"/>
+      </Assignment>
+    </Binding>
+  </Memory>
+
+  <Operation name="checkAvailability">
+    <!-- Check the availability of a book -->
+    <Input name="book" type="String"/>
+    <Output name="available" type="Boolean"/>
+
+    <Scenario name="checkAvailability/ok">
+      <Condition>
+        <Comparison name="moreThan">
+          <Manipulation name="searchAt" type="Integer">
+            <Variable name="currentStock"/>
+            <Input name="book"/>
+          </Manipulation>
+          <Constant name="zero" type="Integer"/>
+        </Comparison>
+      </Condition>
+      <Effect>
+        <Assignment name="equals">
+          <Output name="available"/>
+          <Constant name="true" type="Boolean"/>
+        </Assignment>
+      </Effect>
+    </Scenario>
+
+    <Scenario name="checkAvailability/error">
+      <Condition>
+        <Comparison name="notMoreThan">
+          <Manipulation name="searchAt" type="Integer">
+            <Variable name="currentStock"/>
+            <Input name="book"/>
+          </Manipulation>
+          <Constant name="zero" type="Integer"/>
+        </Comparison>
+      </Condition>
+      <Effect>
+        <Assignment name="equals">
+          <Output name="available"/>
+          <Constant name="false" type="Boolean"/>
+        </Assignment>
+      </Effect>
+    </Scenario>
+  </Operation>
+
+  </Protocol>
+
+  <Machine name="LibraryService">
+    <State name="Initial" initial="true">
+      <Transition name="checkAvailability/ok" source="Initial" target="Initial"/>
+      <Transition name="checkAvailability/error" source="Initial" target="Initial"/>
+    </State>
+  </Machine>
+
+</Service>
