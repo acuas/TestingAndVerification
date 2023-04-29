@@ -15,6 +15,9 @@
        {Book1=10, Book2=0, Book3=3}
     </Constant>
 
+    <Constant name="zero" type="Integer">0</Constant>
+    <Constant name="one" type="Integer">1</Constant>
+
     <!-- variable for the current library stock -->
     <Variable name="currentStock" type="Map[String, Integer]"/>
 
